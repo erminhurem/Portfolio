@@ -154,7 +154,16 @@
 </section>
 
 <!-- Chatbot -->
-<div x-data="{ isOpen: false, messages: [], userMessage: '' }" class="fixed bottom-4 right-4 z-50">
+<div x-data="{ 
+    isOpen: false, 
+    messages: [], 
+    userMessage: '',
+    init() {
+        setTimeout(() => {
+            this.isOpen = true;
+        }, 5000);
+    }
+}" class="fixed bottom-4 right-4 z-50">
     <!-- Chat Button -->
     <button @click="isOpen = !isOpen" 
         class="bg-[#FF851B] hover:bg-[#FF851B]/90 text-white p-4 rounded-full shadow-lg flex items-center justify-center">
