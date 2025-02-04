@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+{% load static %}
+{% block content %}
+               
+<!-- Profile Section -->
+<section class="bg-[#F5F5F5] py-16">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col items-center gap-8">
+            <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-[#001F3F]">
+                <img src="{% static 'img/profile.jpg' %}" alt="Profile Picture" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 text-center">
+                <h2 class="text-3xl font-bold mb-4 text-[#001F3F]">Ermin Huremovic</h2>
+                <p class="text-xl mb-4 text-[#001F3F]">Software Engineer</p>
+                <p class="mb-6 text-[#001F3F] font-sans max-w-3xl mx-auto">
+                    Highly skilled and motivated freelance Python web developer with a strong background in building and maintaining dynamic,
+                    scalable, and user-friendly web applications. Experienced in utilizing frameworks like Django and Flask to deliver innovative
+                    solutions tailored to client needs. Adept at designing APIs, optimizing backend performance, and integrating modern frontend technologies for seamless user experiences. Known for excellent problem-solving abilities, effective communication, and
+                    delivering projects on time and to specification. Currently focused on developing AI agents and building systems leveraging
+                    generative AI. Passionate about blending AI capabilities with robust software systems and staying updated with the latest
+                    advancements in generative AI, machine learning, and scalable AI production.
+                </p>
+                <a href="/static/Ermin Huremovic - CV.pdf" download class="inline-block mb-6 bg-[#FF851B] hover:bg-[#FF851B]/90 text-white px-4 py-2 rounded">
+                    Download Resume
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tech Stack Section -->
+<section class="bg-white py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center text-[#001F3F]">Tech Stack</h2>
+        <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Python</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Django</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Flask</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Tailwindcss</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">HTML</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">CSS</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">JavaScript</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Alpine.js</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">MySQL</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">PostgreSQL</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Firebase</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">GitHub</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Git</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Langchain</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">AWS</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Linux</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Scikit-learn</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Prompt Engineering</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Jira</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Slack</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Ms-Teams</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Celery</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">ChatGPT</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Claude 3.5 Sonnet</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Cursor</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">V0</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Perplexity</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Streamlit</span>
+            <span class="bg-[#001F3F] text-[#F5F5F5] px-3 py-1 rounded-full text-sm">Gradio</span>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Featured Projects -->
+<div class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold mb-8 text-center text-[#001F3F]">Featured Projects</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for project in projects %}
+        <!-- Project Card -->
+        <div class="flex flex-col h-full bg-white border border-[#001F3F]/10 rounded-lg overflow-hidden">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-[#001F3F] mb-2"><a href="{{ project.url }}" target="_blank" rel="noopener noreferrer">{{ project.title }}</a></h3>
+            </div>
+            <div class="px-6 py-4 flex-grow">
+                <div class="flex justify-center">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-38 h-38 object-cover mb-4 rounded-md">
+                </div>
+                <p class="text-sm text-[#001F3F]/80 mb-4">{{ project.description }}</p>
+                <div class="flex flex-wrap gap-2">
+                    
+                    {% for tech in project.technologies|split:"," %}
+                    <span class="bg-[#001F3F] text-[#F5F5F5] px-2 py-1 rounded-full text-xs">{{ tech|strip }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="px-6 py-4">
+                <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="block w-full bg-[#FF851B] hover:bg-[#FF851B]/90 text-white text-center py-2 px-4 rounded">
+                    View Site
+                </a>
+            </div>
+        </div>
+        {% endfor %}       
+    </div>
+</div>
+
+<!-- GitHub Projects -->
+<section class="bg-[#F5F5F5] py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center text-[#001F3F]">GitHub Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- GitHub Project Card 1 -->
+             {% for github_project in github_projects %}
+            <div class="flex flex-col h-full bg-white border border-[#001F3F]/10 rounded-lg overflow-hidden">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-[#001F3F] flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                        {{ github_project.title }}
+                    </h3>
+                </div>
+                <div class="px-6 py-4 flex-grow">
+
+                    <div class="flex justify-center">
+                        <img src="{{ github_project.image.url }}" alt="{{ github_project.title }}" class="w-38 h-38 object-cover mb-4 rounded-md">
+                    </div>
+                    <p class="text-sm text-[#001F3F]/80 mb-4">{{ github_project.description }}</p>
+                    <div class="flex items-center gap-4">
+                        <span class="flex items-center gap-1 text-sm text-[#001F3F]/60">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            {{ github_project.stars }}
+                        </span>
+                        <span class="flex items-center gap-1 text-sm text-[#001F3F]/60">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-fork"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/><path d="M12 12v3"/></svg>
+                            {{ github_project.forks }}
+                        </span>
+                    </div>
+                </div>
+                <div class="px-6 flex flex-wrap gap-2">                    
+                    {% for tech in github_project.technologies|split:"," %}
+                    <span class="bg-[#001F3F] text-[#F5F5F5] px-2 py-1 rounded-full text-xs">{{ tech|strip }}</span>
+                    {% endfor %}
+                </div>
+                <div class="px-6 py-4">
+                    <a href="{{ github_project.url }}" target="_blank" rel="noopener noreferrer" class="block w-full bg-[#001F3F] hover:bg-[#001F3F] text-white text-center py-2 px-4 rounded">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+            {% endfor %}            
+        </div>
+    </div>
+</section>
+        
+{% endblock %}

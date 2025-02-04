@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ermin Huremovic Portfolio</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #F5F5F5;
+            color: #001F3F;
+        }
+    </style>
+    {% block extra_js %}{% endblock %}
+</head>
+<body>
+    <div class="min-h-screen flex flex-col bg-[#F5F5F5]">
+        {% include "partials/header.html" %}
+        <main class="flex-grow">
+            {% block content %}
+            {% endblock %}
+        </main>
+        {% include "partials/footer.html" %}
+    </div>
+</body>
+</html>

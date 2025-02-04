@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Contact Section -->
+<section class="bg-[#F5F5F5] py-16">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center text-[#001F3F]">Contact Me</h2>
+        
+        {% if messages %}
+        <div class="max-w-2xl mx-auto mb-8">
+            {% for message in messages %}
+            <div class="{% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} p-4 rounded-lg mb-4">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Contact Form -->
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-6 text-[#001F3F]">Send me a message</h3>
+                <form method="post" class="space-y-6">
+                    {% csrf_token %}
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-[#001F3F]">Name</label>
+                        <input type="text" name="name" id="name" required
+                            class="mt-1 block w-full rounded-md border border-[#001F3F]/20 px-3 py-2 focus:border-[#FF851B] focus:outline-none focus:ring-1 focus:ring-[#FF851B]">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-[#001F3F]">Email</label>
+                        <input type="email" name="email" id="email" required
+                            class="mt-1 block w-full rounded-md border border-[#001F3F]/20 px-3 py-2 focus:border-[#FF851B] focus:outline-none focus:ring-1 focus:ring-[#FF851B]">
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-[#001F3F]">Subject</label>
+                        <input type="text" name="subject" id="subject" required
+                            class="mt-1 block w-full rounded-md border border-[#001F3F]/20 px-3 py-2 focus:border-[#FF851B] focus:outline-none focus:ring-1 focus:ring-[#FF851B]">
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-[#001F3F]">Message</label>
+                        <textarea name="message" id="message" rows="6" required
+                            class="mt-1 block w-full rounded-md border border-[#001F3F]/20 px-3 py-2 focus:border-[#FF851B] focus:outline-none focus:ring-1 focus:ring-[#FF851B]"></textarea>
+                    </div>
+                    
+                    <div>
+                        <button type="submit"
+                            class="w-full bg-[#FF851B] hover:bg-[#FF851B]/90 text-white py-2 px-4 rounded-md transition duration-300">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Chatbot -->
+            <div class="bg-white p-8 rounded-lg shadow-md" x-data="{ messages: [], userMessage: '' }">
+                <h3 class="text-xl font-semibold mb-6 text-[#001F3F]">Chat with AI Assistant</h3>
+                <div class="flex flex-col h-[400px]">
+                    <div class="flex-1 overflow-y-auto mb-4 space-y-4" x-ref="chatMessages">
+                        <div class="bg-[#001F3F]/5 p-3 rounded-lg">
+                            <p class="text-sm text-[#001F3F]">
+                                👋 Hi! I'm an AI assistant trained to answer questions about Ermin. Feel free to ask me about his skills, experience, or projects!
+                            </p>
+                        </div>
+                        <template x-for="(message, index) in messages" :key="index">
+                            <div>
+                                <div x-show="message.type === 'user'" class="flex justify-end mb-2">
+                                    <div class="bg-[#FF851B] text-white p-3 rounded-lg max-w-[80%]">
+                                        <p class="text-sm" x-text="message.text"></p>
+                                    </div>
+                                </div>
+                                <div x-show="message.type === 'bot'" class="flex justify-start mb-2">
+                                    <div class="bg-[#001F3F]/5 p-3 rounded-lg max-w-[80%]">
+                                        <p class="text-sm text-[#001F3F]" x-text="message.text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <form @submit.prevent="
+                        if (userMessage.trim()) {
+                            messages.push({type: 'user', text: userMessage});
+                            fetch('', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                                },
+                                body: new URLSearchParams({
+                                    'message': userMessage,
+                                    'chatbot': true
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                messages.push({type: 'bot', text: data.response});
+                                $refs.chatMessages.scrollTop = $refs.chatMessages.scrollHeight;
+                            });
+                            userMessage = '';
+                        }
+                    " class="flex gap-2">
+                        {% csrf_token %}
+                        <input type="text" x-model="userMessage" placeholder="Type your message..."
+                            class="flex-1 rounded-md border border-[#001F3F]/20 px-3 py-2 focus:border-[#FF851B] focus:outline-none focus:ring-1 focus:ring-[#FF851B]">
+                        <button type="submit"
+                            class="bg-[#FF851B] hover:bg-[#FF851B]/90 text-white px-4 py-2 rounded-md transition duration-300">
+                            Send
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+{% endblock %} 
