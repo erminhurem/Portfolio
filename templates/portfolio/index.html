@@ -162,6 +162,11 @@
         setTimeout(() => {
             this.isOpen = true;
         }, 5000);
+    },
+    scrollToBottom() {
+        this.$nextTick(() => {
+            this.$refs.chatMessages.scrollTop = this.$refs.chatMessages.scrollHeight;
+        });
     }
 }" class="fixed bottom-4 right-4 z-50">
     <!-- Chat Button -->
@@ -186,8 +191,11 @@
         class="absolute bottom-16 right-0 w-96 bg-white rounded-lg shadow-xl">
         
         <!-- Chat Header -->
-        <div class="bg-[#001F3F] text-white p-4 rounded-t-lg">
+        <div class="bg-[#001F3F] text-white p-4 rounded-t-lg flex justify-between items-center">
             <h3 class="text-lg font-semibold">Chat with AI Assistant</h3>
+            <button @click="messages = []" class="text-sm hover:text-[#FF851B] transition-colors">
+                Clear Chat
+            </button>
         </div>
 
         <!-- Chat Messages -->
@@ -202,14 +210,14 @@
             <!-- Message History -->
             <template x-for="(message, index) in messages" :key="index">
                 <div>
-                    <div x-show="message.type === 'user'" class="flex justify-end mb-2">
+                    <div x-show="message.role === 'user'" class="flex justify-end mb-2">
                         <div class="bg-[#FF851B] text-white p-3 rounded-lg max-w-[80%]">
-                            <p class="text-sm" x-text="message.text"></p>
+                            <p class="text-sm" x-text="message.content"></p>
                         </div>
                     </div>
-                    <div x-show="message.type === 'bot'" class="flex justify-start mb-2">
+                    <div x-show="message.role === 'assistant'" class="flex justify-start mb-2">
                         <div class="bg-[#001F3F]/5 p-3 rounded-lg max-w-[80%]">
-                            <p class="text-sm text-[#001F3F]" x-text="message.text"></p>
+                            <p class="text-sm text-[#001F3F]" x-text="message.content"></p>
                         </div>
                     </div>
                 </div>
@@ -220,7 +228,8 @@
         <div class="border-t p-4">
             <form @submit.prevent="
                 if (userMessage.trim()) {
-                    messages.push({type: 'user', text: userMessage});
+                    messages.push({role: 'user', content: userMessage});
+                    scrollToBottom();
                     fetch('{% url 'contact' %}', {
                         method: 'POST',
                         headers: {
@@ -234,8 +243,8 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        messages.push({type: 'bot', text: data.response});
-                        $refs.chatMessages.scrollTop = $refs.chatMessages.scrollHeight;
+                        messages = data.conversation_history;
+                        scrollToBottom();
                     });
                     userMessage = '';
                 }

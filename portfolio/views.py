@@ -14,10 +14,29 @@ def index(request):
 def contact(request):
     if request.method == 'POST':
         if 'message' in request.POST and 'chatbot' in request.POST:
-            # Handle chatbot request
+            # Get or create session key for this conversation
+            conversation_id = request.session.get('conversation_id')
+            if not conversation_id:
+                conversation_id = str(hash(request.session.session_key))
+                request.session['conversation_id'] = conversation_id
+            
+            # Initialize chatbot with existing conversation history
             chatbot = PortfolioChatbot()
-            response = chatbot.get_response(request.POST['message'])
-            return JsonResponse({'response': response})
+            if 'chat_history' in request.session:
+                chatbot.conversation_history = request.session['chat_history']
+            
+            # Get response from chatbot
+            response = chatbot.get_response(request.POST['message'], conversation_id)
+            
+            # Save updated conversation history to session
+            request.session['chat_history'] = chatbot.conversation_history
+            request.session.modified = True
+            
+            # Return the response and the full conversation history
+            return JsonResponse({
+                'response': response,
+                'conversation_history': chatbot.conversation_history[-10:]  # Last 10 messages
+            })
         
         # Handle contact form submission
         name = request.POST.get('name')

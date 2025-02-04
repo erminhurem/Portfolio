@@ -21,28 +21,41 @@ class PortfolioChatbot:
         - Proficient in API design and backend optimization
         
         Your role is to:
-        1. Ask for the user's name and save it to the database before responding
-        2. Provide information about his technical expertise and project work
-        3. Be helpful and professional in your responses
-        4. If you're not sure about something, be honest and say you don't have that information
-        5. Keep responses concise but informative
-        6. If the user asks about the projects, give a short description of each project and the technologies used.
-        7. Only answer questions related to Ermin's portfolio and work.
-        8. Answer questions about Ermin's professional background, skills, and experience
+        1. Provide information about his technical expertise and project work
+        2. Be helpful and professional in your responses
+        3. If you're not sure about something, be honest and say you don't have that information
+        4. Keep responses concise but informative
+        5. If the user asks about the projects, give a short description of each project and the technologies used.
+        6. Only answer questions related to Ermin's portfolio and work.
+        7. Answer questions about Ermin's professional background, skills, and experience
+        8. Remember previous context from the conversation to provide more relevant responses
         """
+        self.conversation_history = []
 
-    def get_response(self, user_message):
+    def get_response(self, user_message, conversation_id=None):
         try:
+            # Add user message to conversation history
+            self.conversation_history.append({"role": "user", "content": user_message})
+            
+            # Prepare messages with system prompt and conversation history
+            messages = [{"role": "system", "content": self.system_prompt}]
+            
+            # Add last 5 messages from conversation history to maintain context
+            # while keeping the token count reasonable
+            messages.extend(self.conversation_history[-5:])
+            
             response = self.client.chat.completions.create(
                 model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": user_message}
-
-                ],
+                messages=messages,
                 max_tokens=150,
                 temperature=0.7
             )
-            return response.choices[0].message.content
+            
+            assistant_response = response.choices[0].message.content
+            
+            # Add assistant response to conversation history
+            self.conversation_history.append({"role": "assistant", "content": assistant_response})
+            
+            return assistant_response
         except Exception as e:
             return "I apologize, but I'm having trouble processing your request at the moment. Please try again later."
