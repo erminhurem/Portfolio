@@ -147,5 +147,104 @@
         </div>
     </div>
 </section>
+
+<!-- GitHub Projects Section End -->
+        </div>
+    </div>
+</section>
+
+<!-- Chatbot -->
+<div x-data="{ isOpen: false, messages: [], userMessage: '' }" class="fixed bottom-4 right-4 z-50">
+    <!-- Chat Button -->
+    <button @click="isOpen = !isOpen" 
+        class="bg-[#FF851B] hover:bg-[#FF851B]/90 text-white p-4 rounded-full shadow-lg flex items-center justify-center">
+        <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+        <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+
+    <!-- Chat Window -->
+    <div x-show="isOpen" 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-90"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-90"
+        class="absolute bottom-16 right-0 w-96 bg-white rounded-lg shadow-xl">
         
+        <!-- Chat Header -->
+        <div class="bg-[#001F3F] text-white p-4 rounded-t-lg">
+            <h3 class="text-lg font-semibold">Chat with AI Assistant</h3>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="h-96 overflow-y-auto p-4 space-y-4" x-ref="chatMessages">
+            <!-- Welcome Message -->
+            <div class="bg-[#001F3F]/5 p-3 rounded-lg">
+                <p class="text-sm text-[#001F3F]">
+                    👋 Hi! I'm an AI assistant trained to answer questions about Ermin. Feel free to ask me about his skills, experience, or projects!
+                </p>
+            </div>
+
+            <!-- Message History -->
+            <template x-for="(message, index) in messages" :key="index">
+                <div>
+                    <div x-show="message.type === 'user'" class="flex justify-end mb-2">
+                        <div class="bg-[#FF851B] text-white p-3 rounded-lg max-w-[80%]">
+                            <p class="text-sm" x-text="message.text"></p>
+                        </div>
+                    </div>
+                    <div x-show="message.type === 'bot'" class="flex justify-start mb-2">
+                        <div class="bg-[#001F3F]/5 p-3 rounded-lg max-w-[80%]">
+                            <p class="text-sm text-[#001F3F]" x-text="message.text"></p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="border-t p-4">
+            <form @submit.prevent="
+                if (userMessage.trim()) {
+                    messages.push({type: 'user', text: userMessage});
+                    fetch('{% url 'contact' %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        body: new URLSearchParams({
+                            'message': userMessage,
+                            'chatbot': true
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        messages.push({type: 'bot', text: data.response});
+                        $refs.chatMessages.scrollTop = $refs.chatMessages.scrollHeight;
+                    });
+                    userMessage = '';
+                }
+            " class="flex gap-2">
+                {% csrf_token %}
+                <input type="text" x-model="userMessage" placeholder="Type your message..."
+                    class="flex-1 rounded-md border border-[#001F3F]/20 px-3 py-2 text-sm focus:border-[#FF851B] focus:outline-none focus:ring-1 focus:ring-[#FF851B]">
+                <button type="submit"
+                    class="bg-[#FF851B] hover:bg-[#FF851B]/90 text-white px-4 py-2 rounded-md transition duration-300">
+                    Send
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 {% endblock %}

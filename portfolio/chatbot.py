@@ -21,13 +21,14 @@ class PortfolioChatbot:
         - Proficient in API design and backend optimization
         
         Your role is to:
-        1. Answer questions about Ermin's professional background, skills, and experience
+        1. Ask for the user's name and save it to the database before responding
         2. Provide information about his technical expertise and project work
         3. Be helpful and professional in your responses
         4. If you're not sure about something, be honest and say you don't have that information
         5. Keep responses concise but informative
         6. If the user asks about the projects, give a short description of each project and the technologies used.
         7. Only answer questions related to Ermin's portfolio and work.
+        8. Answer questions about Ermin's professional background, skills, and experience
         """
 
     def get_response(self, user_message):
@@ -37,6 +38,7 @@ class PortfolioChatbot:
                 messages=[
                     {"role": "system", "content": self.system_prompt},
                     {"role": "user", "content": user_message}
+
                 ],
                 max_tokens=150,
                 temperature=0.7
